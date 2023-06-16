@@ -10,9 +10,9 @@ import SnapKit
 
 class MainViewController: UIViewController {
     
-    private lazy var toDoListtableView: UITableView = {
+    private lazy var table: UITableView = {
         let tv = UITableView()
-        tv.backgroundColor = .systemGray5
+        tv.backgroundColor = .systemGray2
         tv.register(UITableViewCell.self, forCellReuseIdentifier: Constants.reuseId.tableViewCellID)
         tv.dataSource = self
         return tv
@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
                     
                     DispatchQueue.main.async {
                         self?.list.append(text)
-                        self?.toDoListtableView.reloadData()
+                        self?.table.reloadData()
                         
                     }
                 }
@@ -52,9 +52,9 @@ class MainViewController: UIViewController {
     
     private func setUpSubviews() {
         
-        view.addSubview(toDoListtableView)
+        view.addSubview(table)
         
-        toDoListtableView.snp.makeConstraints { make in
+        table.snp.makeConstraints { make in
             make.top.bottom.left.right.equalToSuperview()
         }
     }
