@@ -22,6 +22,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.list = UserDefaults.standard.stringArray(forKey: "text") ?? []
         setUpSubviews()
         navigationItem.title = Constants.titles.mainTitle
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAdd))
@@ -39,9 +40,10 @@ class MainViewController: UIViewController {
                 if let text = field.text, !text.isEmpty {
                     
                     DispatchQueue.main.async {
+                        let newEntry = [text]
+                        UserDefaults.standard.set(newEntry, forKey: "text")
                         self?.list.append(text)
                         self?.toDoListtableView.reloadData()
-                        
                     }
                 }
             }
@@ -66,7 +68,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseId.tableViewCellID, for: indexPath)
         cell.textLabel?.text = list[indexPath.row]
         return cell
     }
