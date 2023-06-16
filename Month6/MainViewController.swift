@@ -40,8 +40,9 @@ class MainViewController: UIViewController {
                 if let text = field.text, !text.isEmpty {
                     
                     DispatchQueue.main.async {
-                        let newEntry = [text]
-                        UserDefaults.standard.set(newEntry, forKey: "text")
+                        var currentItem = UserDefaults.standard.stringArray(forKey: "text") ?? []
+                        currentItem.append(text)
+                        UserDefaults.standard.set(currentItem, forKey: "text")
                         self?.list.append(text)
                         self?.toDoListtableView.reloadData()
                     }
